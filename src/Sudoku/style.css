@@ -1,4 +1,14 @@
 .item{
     padding: 5px;
     border: 1px black solid;
+    width: 2rem;
+    height: 2rem;
+    text-align: center;
+    outline: none;
+    caret-color: transparent;
+    cursor: pointer;
+}
+
+.item:focus{
+    background-color: darkgray;
 }
