@@ -10,18 +10,20 @@ interface SudokuProps {
 
 export const Sudoku: React.FC<SudokuProps> = ({ board, changeSudokuItem }) => {
   return (
-    <div className="board">
+    <table>
       {board.map((row: SudokuRow, xIndex: number) => (
-        <div className="row">
+        <tr>
           {row.map((item: SudokuItemType, yIndex: number) => (
-            <SudokuItem
-              item={item}
-              changeSudokuItem={changeSudokuItem}
-              coordinates={[xIndex, yIndex]}
-            />
+            <td>
+              <SudokuItem
+                item={item}
+                changeSudokuItem={changeSudokuItem}
+                coordinates={[xIndex, yIndex]}
+              />
+            </td>
           ))}
-        </div>
+        </tr>
       ))}
-    </div>
+    </table>
   );
 };
