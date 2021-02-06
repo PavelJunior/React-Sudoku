@@ -30,7 +30,7 @@ export const SudokuItem: React.FC<SudokuItemProps> = ({
     <input
       type="text"
       className={inputStyle}
-      value={item.value != 0 ? item.value! : null!}
+      value={item.value != 0 ? item.value : ''}
       onChange={changeItemValue}
       disabled={item.permanent}
     />
