@@ -14,6 +14,10 @@ export const SudokuItem: React.FC<SudokuItemProps> = ({
   coordinates,
 }) => {
   const changeItemValue = (e: ChangeEvent<HTMLInputElement>) => {
+    if (e.target.value.length === 0) {
+      changeSudokuItem(coordinates, 0);
+    }
+
     const newValue = parseInt(e.target.value.slice(-1));
     if (!isNaN(newValue)) {
       changeSudokuItem(coordinates, newValue);
@@ -24,7 +28,7 @@ export const SudokuItem: React.FC<SudokuItemProps> = ({
     <input
       type="text"
       className="item"
-      value={item!}
+      value={item != 0 ? item! : null!}
       onChange={changeItemValue}
     />
   );

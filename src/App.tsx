@@ -1,29 +1,23 @@
 import React, { useEffect, useState } from 'react';
 import { Sudoku } from './Sudoku';
+import { puzzles } from './Puzzles';
 
 function App() {
   const [board, setBoard] = useState<SudokuBoard>([]);
 
   useEffect(() => {
-    const createBoard = () => {
-      let newBoard: SudokuBoard = [];
+    let newBoard: SudokuBoard = [];
+    const puzzle = puzzles[Math.floor(Math.random() * 100)];
 
-      for (let i = 0; i < 9; i++) {
-        let row: SudokuRow = [];
-        for (let j = 0; j < 9; j++) {
-          row.push(Math.floor(Math.random() * 10));
-        }
-        newBoard.push(row);
+    for (let i = 0; i < 9; i++) {
+      let row: SudokuRow = [];
+      for (let j = 0; j < 9; j++) {
+        row.push(parseInt(puzzle[i * 9 + j]));
       }
+      newBoard.push(row);
+    }
 
-      newBoard[2][2] = null;
-      newBoard[3][5] = null;
-      newBoard[6][6] = null;
-
-      setBoard(newBoard);
-    };
-
-    createBoard();
+    setBoard(newBoard);
   }, []);
 
   const changeSudokuItem: ChangeItem = (coordinates, newValue) => {
