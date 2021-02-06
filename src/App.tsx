@@ -12,7 +12,9 @@ function App() {
     for (let i = 0; i < 9; i++) {
       let row: SudokuRow = [];
       for (let j = 0; j < 9; j++) {
-        row.push(parseInt(puzzle[i * 9 + j]));
+        const value = parseInt(puzzle[i * 9 + j]);
+        const isPermanent = value !== 0;
+        row.push({ value: value, permanent: isPermanent });
       }
       newBoard.push(row);
     }
@@ -29,7 +31,7 @@ function App() {
       newBoard.push([...row]);
     });
 
-    newBoard[x][y] = newValue;
+    newBoard[x][y].value = newValue;
     setBoard(newBoard);
   };
 

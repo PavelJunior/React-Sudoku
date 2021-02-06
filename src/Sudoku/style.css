@@ -1,14 +1,9 @@
-.item{
-    padding: 5px;
-    border: 1px black solid;
-    width: 2rem;
-    height: 2rem;
-    text-align: center;
-    outline: none;
-    caret-color: transparent;
-    cursor: pointer;
+.board{
+    display: flex;
+    flex-direction: column;
 }
 
-.item:focus{
-    background-color: darkgray;
+.row{
+    display: flex;
+    flex-direction: row;
 }

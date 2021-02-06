@@ -1,9 +1,20 @@
-.board{
-    display: flex;
-    flex-direction: column;
+.item{
+    padding: 5px;
+    border: 1px black solid;
+    width: 2rem;
+    height: 2rem;
+    text-align: center;
+    outline: none;
+    caret-color: transparent;
+    cursor: pointer;
+    font-size: 2rem;
 }
 
-.row{
-    display: flex;
-    flex-direction: row;
+.item-permanent{
+    font-weight: 900;
 }
+
+.item:focus{
+    background-color: darkgray;
+}
+

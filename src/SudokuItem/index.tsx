@@ -24,12 +24,15 @@ export const SudokuItem: React.FC<SudokuItemProps> = ({
     }
   };
 
+  const inputStyle = item.permanent ? 'item item-permanent' : 'item';
+
   return (
     <input
       type="text"
-      className="item"
-      value={item != 0 ? item! : null!}
+      className={inputStyle}
+      value={item.value != 0 ? item.value! : null!}
       onChange={changeItemValue}
+      disabled={item.permanent}
     />
   );
 };
