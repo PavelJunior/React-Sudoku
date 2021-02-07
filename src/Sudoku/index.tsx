@@ -15,8 +15,7 @@ export const Sudoku: React.FC = () => {
 
   const getBoard = () => {
     let newBoard: SudokuBoard = [];
-    // const puzzle = puzzles[Math.floor(Math.random() * 100)];
-    const puzzle = puzzles[0];
+    const puzzle = puzzles[Math.floor(Math.random() * 100)];
 
     for (let i = 0; i < 9; i++) {
       let row: SudokuRow = [];
