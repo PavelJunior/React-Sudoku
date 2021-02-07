@@ -40,8 +40,9 @@ export const Sudoku: React.FC = () => {
     const y = coordinates[1];
 
     let newBoard: SudokuBoard = [];
-    board.map((row: SudokuRow) => {
-      newBoard.push([...row]);
+
+    board.forEach((row: SudokuRow) => {
+      return newBoard.push([...row]);
     });
 
     newBoard[x][y].value = newValue;
