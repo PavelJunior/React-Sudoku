@@ -14,6 +14,14 @@
     font-weight: 900;
 }
 
+.item-mistake{
+    background-color: #ff8080;
+}
+
 .item:focus{
     background-color: darkgray;
+}
+
+.item-mistake:focus{
+    background-color: #d27979;
 }

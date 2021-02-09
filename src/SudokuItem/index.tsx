@@ -6,12 +6,14 @@ interface SudokuItemProps {
   item: SudokuItemType;
   changeSudokuItem: ChangeItem;
   coordinates: Coordinates;
+  isMistake: boolean;
 }
 
 export const SudokuItem: React.FC<SudokuItemProps> = ({
   item,
   changeSudokuItem,
   coordinates,
+  isMistake,
 }) => {
   const changeItemValue = (e: ChangeEvent<HTMLInputElement>) => {
     if (e.target.value.length === 0) {
@@ -26,12 +28,14 @@ export const SudokuItem: React.FC<SudokuItemProps> = ({
     }
   };
 
-  const inputStyle = item.permanent ? 'item item-permanent' : 'item';
+  const mainInputStyle = item.permanent ? 'item item-permanent' : 'item';
+  const mistakeInputStyle = isMistake ? 'item-mistake' : '';
+  const componentStyle = mainInputStyle + ' ' + mistakeInputStyle;
 
   return (
     <input
       type="text"
-      className={inputStyle}
+      className={componentStyle}
       value={item.value !== 0 ? item.value : ''}
       onChange={changeItemValue}
       disabled={item.permanent}

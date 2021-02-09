@@ -7,6 +7,7 @@ import './style.css';
 
 export const Sudoku: React.FC = () => {
   const [board, setBoard] = useState<SudokuBoard>([]);
+  const [mistakes, setMistakes] = useState<Mistakes>([]);
   const [solved, setSolved] = useState<Boolean>(false);
 
   useEffect(() => {
@@ -15,19 +16,25 @@ export const Sudoku: React.FC = () => {
 
   const getBoard = () => {
     let newBoard: SudokuBoard = [];
+    let newMistakes: Mistakes = [];
+    // const puzzle = puzzles[0];
     const puzzle = puzzles[Math.floor(Math.random() * 100)];
 
     for (let i = 0; i < 9; i++) {
       let row: SudokuRow = [];
+      let mistakesRow: MistakesRow = [];
       for (let j = 0; j < 9; j++) {
         const value = parseInt(puzzle[i * 9 + j]);
         const isPermanent = value !== 0;
         row.push({ value: value, permanent: isPermanent });
+        mistakesRow.push(false);
       }
       newBoard.push(row);
+      newMistakes.push(mistakesRow);
     }
 
     setBoard(newBoard);
+    setMistakes(newMistakes);
   };
 
   const restartGame = () => {
@@ -48,77 +55,100 @@ export const Sudoku: React.FC = () => {
     newBoard[x][y].value = newValue;
     setBoard(newBoard);
 
-    isSolved();
+    checkSudokuForErrors();
   };
 
-  const isSolved = () => {
-    for (let i = 0; i < 9; i++) {
-      for (let j = 0; j < 9; j++) {
-        if (board[i][j].value === 0) {
-          console.log('Not filled');
-          return false;
+  const checkGroup = (group: CheckGroup, mistakes: TemporaryMistakes) => {
+    let newBoardSolved = true;
+    if (new Set(group.map((i: CheckItem) => i.value)).size !== group.length) {
+      newBoardSolved = false;
+
+      group.forEach((item: CheckItem) => {
+        const elements = group.filter(
+          (i: CheckItem) => i.value === item.value && item.value !== 0
+        );
+        if (elements.length > 1) {
+          elements.forEach((el: CheckItem) => {
+            mistakes.push(el.coordinates);
+          });
+        }
+      });
+    }
+
+    return newBoardSolved;
+  };
+
+  const checkSudokuForErrors = () => {
+    let temporaryMistakes: TemporaryMistakes = [];
+    let newMistakes: Mistakes = [];
+    let allFieldFilled = true;
+
+    // check that Sudoku don't have empty fields and fill array of arrays for mistakes with default values
+    for (let y = 0; y < 9; y++) {
+      let mistakeRow: MistakesRow = [];
+      for (let x = 0; x < 9; x++) {
+        mistakeRow.push(false);
+        if (board[y][x].value === 0) {
+          allFieldFilled = false;
         }
       }
+      newMistakes.push(mistakeRow);
     }
 
-    for (let i = 0; i < 9; i++) {
-      let row = [];
-
-      for (let j = 0; j < 9; j++) {
-        row.push(board[i][j].value);
+    // check for mistakes in rows and columns
+    for (let y = 0; y < 9; y++) {
+      let row: CheckGroup = [];
+      let column: CheckGroup = [];
+      for (let x = 0; x < 9; x++) {
+        column.push({ value: board[y][x].value, coordinates: [y, x] });
+        row.push({ value: board[y][x].value, coordinates: [y, x] });
       }
 
-      if (new Set(row).size !== 9) {
-        console.log('Error in row ' + (i + 1));
-        return false;
-      }
+      checkGroup(row, temporaryMistakes);
+      checkGroup(column, temporaryMistakes);
     }
 
-    for (let i = 0; i < 9; i++) {
-      let column = [];
-
-      for (let j = 0; j < 9; j++) {
-        column.push(board[j][i].value);
-      }
-
-      if (new Set(column).size !== 9) {
-        console.log('Error in column ' + (i + 1));
-        return false;
-      }
-    }
-
+    // check for mistakes in squares
     for (let yStart = 0; yStart < 9; yStart += 3) {
       for (let xStart = 0; xStart < 9; xStart += 3) {
-        let square = [];
+        let square: CheckGroup = [];
         for (let y = yStart; y < yStart + 3; y++) {
           for (let x = xStart; x < xStart + 3; x++) {
-            square.push(board[x][y].value);
+            square.push({ value: board[y][x].value, coordinates: [y, x] });
           }
         }
-        if (new Set(square).size !== 9) {
-          console.log(
-            `Error in square ${xStart}x${yStart} - ${xStart + 3}x${yStart + 3}`
-          );
-          return false;
-        }
+        checkGroup(square, temporaryMistakes);
       }
     }
 
-    setSolved(true);
+    // if all fields are filled and no errors were found game is complete
+    setSolved(allFieldFilled && temporaryMistakes.length === 0);
+
+    // covert mistakes to a proper format and put in state
+    temporaryMistakes.forEach((mistake: Coordinates) => {
+      const y = mistake[0];
+      const x = mistake[1];
+      if (!board[y][x].permanent) {
+        newMistakes[y][x] = true;
+      }
+    });
+
+    setMistakes(newMistakes);
   };
 
   return (
     <>
       <table>
         <tbody>
-          {board.map((row: SudokuRow, xIndex: number) => (
-            <tr key={xIndex}>
-              {row.map((item: SudokuItemType, yIndex: number) => (
-                <td key={(xIndex + 1) * (yIndex + 1)}>
+          {board.map((row: SudokuRow, yIndex: number) => (
+            <tr key={yIndex}>
+              {row.map((item: SudokuItemType, xIndex: number) => (
+                <td key={(yIndex + 1) * (xIndex + 1)}>
                   <SudokuItem
                     item={item}
                     changeSudokuItem={changeSudokuItem}
-                    coordinates={[xIndex, yIndex]}
+                    coordinates={[yIndex, xIndex]}
+                    isMistake={mistakes[yIndex][xIndex]}
                   />
                 </td>
               ))}
