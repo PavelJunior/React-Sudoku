@@ -9,6 +9,8 @@ export const Sudoku: React.FC = () => {
   const [board, setBoard] = useState<SudokuBoard>([]);
   const [mistakes, setMistakes] = useState<Mistakes>([]);
   const [solved, setSolved] = useState<Boolean>(false);
+  const [difficulty, setDifficulty] = useState<string>('intermediate');
+  const [showMistakes, setShowMistakes] = useState<Boolean>(false);
 
   useEffect(() => {
     getBoard();
@@ -17,8 +19,7 @@ export const Sudoku: React.FC = () => {
   const getBoard = () => {
     let newBoard: SudokuBoard = [];
     let newMistakes: Mistakes = [];
-    // const puzzle = puzzles[0];
-    const puzzle = puzzles[Math.floor(Math.random() * 100)];
+    const puzzle = puzzles[difficulty][Math.floor(Math.random() * 30)];
 
     for (let i = 0; i < 9; i++) {
       let row: SudokuRow = [];

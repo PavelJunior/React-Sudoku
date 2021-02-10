@@ -11,3 +11,5 @@ type CheckItem = { value: number; coordinates: Coordinates };
 
 type Coordinates = [number, number];
 type ChangeItem = (coordinates: Coordinates, newValue: number) => void;
+
+type Puzzles = { [k: string]: Array<string> };
