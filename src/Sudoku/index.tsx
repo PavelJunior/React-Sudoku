@@ -1,7 +1,8 @@
 import React, { useEffect, useState } from 'react';
 import { SudokuItem } from '../SudokuItem';
 import { puzzles } from '../Puzzles';
-import { SuccessModal } from '../SuccessModal';
+import { SolvedModal } from '../SolvedModal';
+import { ChooseDifficultyModal } from '../ChooseDifficultyModal';
 
 import './style.css';
 
@@ -9,17 +10,21 @@ export const Sudoku: React.FC = () => {
   const [board, setBoard] = useState<SudokuBoard>([]);
   const [mistakes, setMistakes] = useState<Mistakes>([]);
   const [solved, setSolved] = useState<Boolean>(false);
-  const [difficulty, setDifficulty] = useState<string>('intermediate');
+  const [difficulty, setDifficulty] = useState<string>('');
+  // const [showDifficultyModal, setShowDifficultyModal] = useState<boolean>(true);
   const [showMistakes, setShowMistakes] = useState<Boolean>(false);
 
   useEffect(() => {
-    getBoard();
-  }, []);
+    if (difficulty != '') {
+      getBoard();
+    }
+  }, [difficulty]);
 
   const getBoard = () => {
     let newBoard: SudokuBoard = [];
     let newMistakes: Mistakes = [];
     const puzzle = puzzles[difficulty][Math.floor(Math.random() * 30)];
+    // const puzzle = puzzles['easy'][0];
 
     for (let i = 0; i < 9; i++) {
       let row: SudokuRow = [];
@@ -40,7 +45,12 @@ export const Sudoku: React.FC = () => {
 
   const restartGame = () => {
     getBoard();
+    setDifficulty('');
     setSolved(false);
+  };
+
+  const chooseDifficulty = (difficulty: string) => {
+    setDifficulty(difficulty);
   };
 
   const changeSudokuItem: ChangeItem = (coordinates, newValue) => {
@@ -137,7 +147,7 @@ export const Sudoku: React.FC = () => {
     setMistakes(newMistakes);
   };
 
-  return (
+  return difficulty != '' ? (
     <>
       <table>
         <tbody>
@@ -157,7 +167,9 @@ export const Sudoku: React.FC = () => {
           ))}
         </tbody>
       </table>
-      <SuccessModal open={solved} restartGame={restartGame} />
+      <SolvedModal open={solved} restartGame={restartGame} />
     </>
+  ) : (
+    <ChooseDifficultyModal open={true} setDifficulty={chooseDifficulty} />
   );
 };
