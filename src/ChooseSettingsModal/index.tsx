@@ -21,7 +21,7 @@ export const ChooseSettingsModal: React.FC<ChooseSettingsModalProps> = ({
   const [temporaryDifficulty, setTemporaryDifficulty] = useState(
     'intermediate'
   );
-  const [temporaryShowMistakes, setTemporaryShowMistakes] = useState(false);
+  const [temporaryShowMistakes, setTemporaryShowMistakes] = useState(true);
 
   const handleDifficultyChange = (e: ChangeEvent<HTMLInputElement>) => {
     open = false;

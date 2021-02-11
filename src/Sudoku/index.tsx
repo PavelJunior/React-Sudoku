@@ -12,7 +12,7 @@ export const Sudoku: React.FC = () => {
   const [mistakes, setMistakes] = useState<Mistakes>([]);
   const [solved, setSolved] = useState<boolean>(false);
   const [difficulty, setDifficulty] = useState<string>('');
-  const [showMistakes, setShowMistakes] = useState<boolean>(false);
+  const [showMistakes, setShowMistakes] = useState<boolean>(true);
 
   useEffect(() => {
     if (difficulty != '') {
@@ -112,7 +112,7 @@ export const Sudoku: React.FC = () => {
       let column: CheckGroup = [];
       for (let x = 0; x < 9; x++) {
         column.push({ value: board[y][x].value, coordinates: [y, x] });
-        row.push({ value: board[y][x].value, coordinates: [y, x] });
+        row.push({ value: board[x][y].value, coordinates: [x, y] });
       }
 
       checkGroup(row, temporaryMistakes);
@@ -147,29 +147,33 @@ export const Sudoku: React.FC = () => {
     setMistakes(newMistakes);
   };
 
+  const sudokuBoard = () => (
+    <table>
+      <tbody>
+        {board.map((row: SudokuRow, yIndex: number) => (
+          <tr key={yIndex}>
+            {row.map((item: SudokuItemType, xIndex: number) => (
+              <td key={(yIndex + 1) * (xIndex + 1)}>
+                <SudokuItem
+                  item={item}
+                  changeSudokuItem={changeSudokuItem}
+                  coordinates={[yIndex, xIndex]}
+                  isMistake={showMistakes ? mistakes[yIndex][xIndex] : false}
+                />
+              </td>
+            ))}
+          </tr>
+        ))}
+      </tbody>
+    </table>
+  );
+
   return difficulty != '' ? (
     <div className="container">
       <Button variant="contained" onClick={() => restartGame()}>
         New Game
       </Button>
-      <table>
-        <tbody>
-          {board.map((row: SudokuRow, yIndex: number) => (
-            <tr key={yIndex}>
-              {row.map((item: SudokuItemType, xIndex: number) => (
-                <td key={(yIndex + 1) * (xIndex + 1)}>
-                  <SudokuItem
-                    item={item}
-                    changeSudokuItem={changeSudokuItem}
-                    coordinates={[yIndex, xIndex]}
-                    isMistake={showMistakes ? mistakes[yIndex][xIndex] : false}
-                  />
-                </td>
-              ))}
-            </tr>
-          ))}
-        </tbody>
-      </table>
+      {sudokuBoard()}
       <SolvedModal open={solved} restartGame={restartGame} />
     </div>
   ) : (
