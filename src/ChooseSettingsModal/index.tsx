@@ -18,9 +18,7 @@ export const ChooseSettingsModal: React.FC<ChooseSettingsModalProps> = ({
   open,
   applySettings,
 }) => {
-  const [temporaryDifficulty, setTemporaryDifficulty] = useState(
-    'intermediate'
-  );
+  const [temporaryDifficulty, setTemporaryDifficulty] = useState('easy');
   const [temporaryShowMistakes, setTemporaryShowMistakes] = useState(true);
 
   const handleDifficultyChange = (e: ChangeEvent<HTMLInputElement>) => {
@@ -47,9 +45,9 @@ export const ChooseSettingsModal: React.FC<ChooseSettingsModalProps> = ({
             >
               <FormControlLabel value="easy" control={<Radio />} label="Easy" />
               <FormControlLabel
-                value="intermediate"
+                value="medium"
                 control={<Radio />}
-                label="Intermediate"
+                label="Medium"
               />
               <FormControlLabel value="hard" control={<Radio />} label="Hard" />
             </RadioGroup>
