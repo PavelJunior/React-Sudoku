@@ -7,6 +7,6 @@ nine 3×3 subregions of the 9×9 playing board.
 You can choose a difficulty, and you have an option 
 to highlight all mistakes you made.
 
-Game implemented using React, Typescript and Material UI.
+The game implemented using React, Typescript and Material UI.
 
 Live Demo: https://paveljunior.github.io/React-Sudoku/
