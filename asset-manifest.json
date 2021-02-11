@@ -1,20 +1,20 @@
 {
   "files": {
-    "main.css": "/React-Sudoku/static/css/main.b1d44cea.chunk.css",
-    "main.js": "/React-Sudoku/static/js/main.61258e81.chunk.js",
-    "main.js.map": "/React-Sudoku/static/js/main.61258e81.chunk.js.map",
+    "main.css": "/React-Sudoku/static/css/main.7106d57c.chunk.css",
+    "main.js": "/React-Sudoku/static/js/main.d4584b86.chunk.js",
+    "main.js.map": "/React-Sudoku/static/js/main.d4584b86.chunk.js.map",
     "runtime-main.js": "/React-Sudoku/static/js/runtime-main.8312d2d4.js",
     "runtime-main.js.map": "/React-Sudoku/static/js/runtime-main.8312d2d4.js.map",
-    "static/js/2.3668d62b.chunk.js": "/React-Sudoku/static/js/2.3668d62b.chunk.js",
-    "static/js/2.3668d62b.chunk.js.map": "/React-Sudoku/static/js/2.3668d62b.chunk.js.map",
+    "static/js/2.749a67fa.chunk.js": "/React-Sudoku/static/js/2.749a67fa.chunk.js",
+    "static/js/2.749a67fa.chunk.js.map": "/React-Sudoku/static/js/2.749a67fa.chunk.js.map",
     "index.html": "/React-Sudoku/index.html",
-    "static/css/main.b1d44cea.chunk.css.map": "/React-Sudoku/static/css/main.b1d44cea.chunk.css.map",
-    "static/js/2.3668d62b.chunk.js.LICENSE.txt": "/React-Sudoku/static/js/2.3668d62b.chunk.js.LICENSE.txt"
+    "static/css/main.7106d57c.chunk.css.map": "/React-Sudoku/static/css/main.7106d57c.chunk.css.map",
+    "static/js/2.749a67fa.chunk.js.LICENSE.txt": "/React-Sudoku/static/js/2.749a67fa.chunk.js.LICENSE.txt"
   },
   "entrypoints": [
     "static/js/runtime-main.8312d2d4.js",
-    "static/js/2.3668d62b.chunk.js",
-    "static/css/main.b1d44cea.chunk.css",
-    "static/js/main.61258e81.chunk.js"
+    "static/js/2.749a67fa.chunk.js",
+    "static/css/main.7106d57c.chunk.css",
+    "static/js/main.d4584b86.chunk.js"
   ]
 }
