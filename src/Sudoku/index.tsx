@@ -1,20 +1,22 @@
 import React, { useEffect, useState } from 'react';
 import { SudokuItem } from '../SudokuItem';
 import { puzzles } from '../Puzzles';
-import { SolvedModal } from '../SolvedModal';
-import { ChooseSettingsModal } from '../ChooseSettingsModal';
-import { RestartGameModal } from '../RestartGameModal';
 
-import { Button } from '@material-ui/core';
 import './style.css';
 
-export const Sudoku: React.FC = () => {
+interface SudokuProps {
+  difficulty: string;
+  setSolved: Function;
+  showMistakes: boolean;
+}
+
+export const Sudoku: React.FC<SudokuProps> = ({
+  difficulty,
+  setSolved,
+  showMistakes,
+}) => {
   const [board, setBoard] = useState<SudokuBoard>([]);
   const [mistakes, setMistakes] = useState<Mistakes>([]);
-  const [solved, setSolved] = useState<boolean>(false);
-  const [difficulty, setDifficulty] = useState<string>('');
-  const [showMistakes, setShowMistakes] = useState<boolean>(true);
-  const [restartModal, setRestartModal] = useState<boolean>(false);
 
   useEffect(() => {
     if (difficulty != '') {
@@ -42,17 +44,6 @@ export const Sudoku: React.FC = () => {
 
     setBoard(newBoard);
     setMistakes(newMistakes);
-  };
-
-  const restartGame = () => {
-    getBoard();
-    setDifficulty('');
-    setSolved(false);
-  };
-
-  const applySettings = (difficulty: string, showMistakes: boolean) => {
-    setDifficulty(difficulty);
-    setShowMistakes(showMistakes);
   };
 
   const changeSudokuItem: ChangeItem = (coordinates, newValue) => {
@@ -149,15 +140,7 @@ export const Sudoku: React.FC = () => {
     setMistakes(newMistakes);
   };
 
-  const openRestartModal = () => {
-    setRestartModal(true);
-  };
-
-  const closeRestartModal = () => {
-    setRestartModal(false);
-  };
-
-  const sudokuBoard = () => (
+  return (
     <table>
       <tbody>
         {board.map((row: SudokuRow, yIndex: number) => (
@@ -176,22 +159,5 @@ export const Sudoku: React.FC = () => {
         ))}
       </tbody>
     </table>
-  );
-
-  return difficulty != '' ? (
-    <div className="container">
-      <Button variant="contained" onClick={openRestartModal}>
-        New Game
-      </Button>
-      {sudokuBoard()}
-      <SolvedModal open={solved} restartGame={restartGame} />
-      <RestartGameModal
-        open={restartModal}
-        closeModal={closeRestartModal}
-        restartGame={restartGame}
-      />
-    </div>
-  ) : (
-    <ChooseSettingsModal open={true} applySettings={applySettings} />
   );
 };

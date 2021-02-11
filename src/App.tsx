@@ -1,8 +1,8 @@
 import React from 'react';
-import { Sudoku } from './Sudoku';
+import { Game } from './Game';
 
 function App() {
-  return <Sudoku />;
+  return <Game />;
 }
 
 export default App;
