@@ -6,23 +6,29 @@ import {
   FormControlLabel,
   Radio,
 } from '@material-ui/core';
+import Switch from 'react-switch';
 
 interface SuccessModalProps {
   open: Boolean;
-  setDifficulty: Function;
+  applySettings: Function;
 }
 
 export const ChooseDifficultyModal: React.FC<SuccessModalProps> = ({
   open,
-  setDifficulty,
+  applySettings,
 }) => {
   const [temporaryDifficulty, setTemporaryDifficulty] = useState(
     'intermediate'
   );
+  const [temporaryShowMistakes, setTemporaryShowMistakes] = useState(false);
 
-  const handleChange = (e: ChangeEvent<HTMLInputElement>) => {
+  const handleDifficultyChange = (e: ChangeEvent<HTMLInputElement>) => {
     open = false;
     setTemporaryDifficulty(e.target.value);
+  };
+
+  const handleShowMistakesChange = () => {
+    setTemporaryShowMistakes(!temporaryShowMistakes);
   };
 
   return (
@@ -36,7 +42,7 @@ export const ChooseDifficultyModal: React.FC<SuccessModalProps> = ({
             <RadioGroup
               name="difficulty"
               value={temporaryDifficulty}
-              onChange={handleChange}
+              onChange={handleDifficultyChange}
             >
               <FormControlLabel value="easy" control={<Radio />} label="Easy" />
               <FormControlLabel
@@ -47,9 +53,20 @@ export const ChooseDifficultyModal: React.FC<SuccessModalProps> = ({
               <FormControlLabel value="hard" control={<Radio />} label="Hard" />
             </RadioGroup>
           </FormControl>
+          <p>
+            Show Mistakes:{' '}
+            <Switch
+              onChange={handleShowMistakesChange}
+              checked={temporaryShowMistakes}
+            />
+          </p>
 
           <div>
-            <button onClick={() => setDifficulty(temporaryDifficulty)}>
+            <button
+              onClick={() =>
+                applySettings(temporaryDifficulty, temporaryShowMistakes)
+              }
+            >
               Start Game!
             </button>
           </div>

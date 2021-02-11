@@ -4,14 +4,15 @@ import { puzzles } from '../Puzzles';
 import { SolvedModal } from '../SolvedModal';
 import { ChooseDifficultyModal } from '../ChooseDifficultyModal';
 
+import ReplayIcon from '@material-ui/icons/Replay';
 import './style.css';
 
 export const Sudoku: React.FC = () => {
   const [board, setBoard] = useState<SudokuBoard>([]);
   const [mistakes, setMistakes] = useState<Mistakes>([]);
-  const [solved, setSolved] = useState<Boolean>(false);
+  const [solved, setSolved] = useState<boolean>(false);
   const [difficulty, setDifficulty] = useState<string>('');
-  const [showMistakes, setShowMistakes] = useState<Boolean>(false);
+  const [showMistakes, setShowMistakes] = useState<boolean>(false);
 
   useEffect(() => {
     if (difficulty != '') {
@@ -47,8 +48,9 @@ export const Sudoku: React.FC = () => {
     setSolved(false);
   };
 
-  const chooseDifficulty = (difficulty: string) => {
+  const applySettings = (difficulty: string, showMistakes: boolean) => {
     setDifficulty(difficulty);
+    setShowMistakes(showMistakes);
   };
 
   const changeSudokuItem: ChangeItem = (coordinates, newValue) => {
@@ -147,6 +149,10 @@ export const Sudoku: React.FC = () => {
 
   return difficulty != '' ? (
     <>
+      <button onClick={() => restartGame()}>
+        Restart Game
+        <ReplayIcon />
+      </button>
       <table>
         <tbody>
           {board.map((row: SudokuRow, yIndex: number) => (
@@ -157,7 +163,7 @@ export const Sudoku: React.FC = () => {
                     item={item}
                     changeSudokuItem={changeSudokuItem}
                     coordinates={[yIndex, xIndex]}
-                    isMistake={mistakes[yIndex][xIndex]}
+                    isMistake={showMistakes ? mistakes[yIndex][xIndex] : false}
                   />
                 </td>
               ))}
@@ -168,6 +174,6 @@ export const Sudoku: React.FC = () => {
       <SolvedModal open={solved} restartGame={restartGame} />
     </>
   ) : (
-    <ChooseDifficultyModal open={true} setDifficulty={chooseDifficulty} />
+    <ChooseDifficultyModal open={true} applySettings={applySettings} />
   );
 };
