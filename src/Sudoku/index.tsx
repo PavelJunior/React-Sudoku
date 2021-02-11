@@ -3,8 +3,8 @@ import { SudokuItem } from '../SudokuItem';
 import { puzzles } from '../Puzzles';
 import { SolvedModal } from '../SolvedModal';
 import { ChooseSettingsModal } from '../ChooseSettingsModal';
+import { Button } from '@material-ui/core';
 
-import ReplayIcon from '@material-ui/icons/Replay';
 import './style.css';
 
 export const Sudoku: React.FC = () => {
@@ -148,11 +148,10 @@ export const Sudoku: React.FC = () => {
   };
 
   return difficulty != '' ? (
-    <>
-      <button onClick={() => restartGame()}>
-        Restart Game
-        <ReplayIcon />
-      </button>
+    <div className="container">
+      <Button variant="contained" onClick={() => restartGame()}>
+        New Game
+      </Button>
       <table>
         <tbody>
           {board.map((row: SudokuRow, yIndex: number) => (
@@ -172,7 +171,7 @@ export const Sudoku: React.FC = () => {
         </tbody>
       </table>
       <SolvedModal open={solved} restartGame={restartGame} />
-    </>
+    </div>
   ) : (
     <ChooseSettingsModal open={true} applySettings={applySettings} />
   );

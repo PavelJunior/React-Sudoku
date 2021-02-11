@@ -5,15 +5,16 @@ import {
   RadioGroup,
   FormControlLabel,
   Radio,
+  Button,
+  Switch,
 } from '@material-ui/core';
-import Switch from 'react-switch';
 
-interface SuccessModalProps {
+interface ChooseSettingsModalProps {
   open: Boolean;
   applySettings: Function;
 }
 
-export const ChooseSettingsModal: React.FC<SuccessModalProps> = ({
+export const ChooseSettingsModal: React.FC<ChooseSettingsModalProps> = ({
   open,
   applySettings,
 }) => {
@@ -36,7 +37,7 @@ export const ChooseSettingsModal: React.FC<SuccessModalProps> = ({
       open={open}
       children={
         <>
-          <h3>Choose difficulty</h3>
+          <h3>Choose Settings</h3>
 
           <FormControl component="fieldset">
             <RadioGroup
@@ -52,23 +53,28 @@ export const ChooseSettingsModal: React.FC<SuccessModalProps> = ({
               />
               <FormControlLabel value="hard" control={<Radio />} label="Hard" />
             </RadioGroup>
-          </FormControl>
-          <p>
-            Show Mistakes:{' '}
-            <Switch
-              onChange={handleShowMistakesChange}
-              checked={temporaryShowMistakes}
+            <br />
+            <FormControlLabel
+              control={
+                <Switch
+                  size="medium"
+                  checked={temporaryShowMistakes}
+                  onChange={handleShowMistakesChange}
+                />
+              }
+              label="Show Mistakes"
             />
-          </p>
-
+            <br />
+          </FormControl>
           <div>
-            <button
+            <Button
+              variant="contained"
               onClick={() =>
                 applySettings(temporaryDifficulty, temporaryShowMistakes)
               }
             >
               Start Game!
-            </button>
+            </Button>
           </div>
         </>
       }

@@ -1,15 +1,13 @@
 import React from 'react';
 import { Modal } from '../Modal';
+import { Button } from '@material-ui/core';
 
-interface SuccessModalProps {
+interface SolvedProps {
   open: Boolean;
   restartGame: Function;
 }
 
-export const SolvedModal: React.FC<SuccessModalProps> = ({
-  open,
-  restartGame,
-}) => {
+export const SolvedModal: React.FC<SolvedProps> = ({ open, restartGame }) => {
   const onRestartPress = () => {
     restartGame();
   };
@@ -22,7 +20,9 @@ export const SolvedModal: React.FC<SuccessModalProps> = ({
           <h3>Great job! You solved the puzzle!</h3>
           <div>
             <p>Do you want to play again?</p>
-            <button onClick={onRestartPress}>Play again</button>
+            <Button variant="contained" onClick={onRestartPress}>
+              Play again
+            </Button>
           </div>
         </>
       }
