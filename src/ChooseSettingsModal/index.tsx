@@ -13,7 +13,7 @@ interface SuccessModalProps {
   applySettings: Function;
 }
 
-export const ChooseDifficultyModal: React.FC<SuccessModalProps> = ({
+export const ChooseSettingsModal: React.FC<SuccessModalProps> = ({
   open,
   applySettings,
 }) => {

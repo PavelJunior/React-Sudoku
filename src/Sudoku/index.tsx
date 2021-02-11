@@ -2,7 +2,7 @@ import React, { useEffect, useState } from 'react';
 import { SudokuItem } from '../SudokuItem';
 import { puzzles } from '../Puzzles';
 import { SolvedModal } from '../SolvedModal';
-import { ChooseDifficultyModal } from '../ChooseDifficultyModal';
+import { ChooseSettingsModal } from '../ChooseSettingsModal';
 
 import ReplayIcon from '@material-ui/icons/Replay';
 import './style.css';
@@ -174,6 +174,6 @@ export const Sudoku: React.FC = () => {
       <SolvedModal open={solved} restartGame={restartGame} />
     </>
   ) : (
-    <ChooseDifficultyModal open={true} applySettings={applySettings} />
+    <ChooseSettingsModal open={true} applySettings={applySettings} />
   );
 };
